@@ -2,20 +2,20 @@
 
 ## Stages, or modules, or states:
 
-# WindowsService
-# XmlEventHandle
-# SongChangeHandle
-# HourChangeHandle
-# Afterward
+# ? WindowsService
+#   HandlerXmlEvent
+#   HandlerSongChange
+#   HandlerHourChange
+# ? Afterward
 
-module QuickRadioPlaylist
+module ::QuickRadioPlaylist
   module Run
     extend self
 
     def run
       return unless xml_event?
-      require 'quick_radio_playlist/xml_event_handle'
-      XmlEventHandle.run
+      require 'quick_radio_playlist/handler_xml_event'
+      HandlerXmlEvent.run
     end
 
     private

@@ -2,8 +2,8 @@
 require 'quick_radio_playlist/hour_current'
 require 'quick_radio_playlist/song_recent_database'
 
-module QuickRadioPlaylist
-  module HourChangeHandle
+module ::QuickRadioPlaylist
+  module HandlerHourChange
     extend self
 
     def run() history_filter end

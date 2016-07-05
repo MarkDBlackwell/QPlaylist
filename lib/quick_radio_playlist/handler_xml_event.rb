@@ -3,8 +3,8 @@ require 'quick_radio_playlist/snapshot'
 require 'quick_radio_playlist/song'
 require 'quick_radio_playlist/song_now_playing'
 
-module QuickRadioPlaylist
-  module XmlEventHandle
+module ::QuickRadioPlaylist
+  module HandlerXmlEvent
     extend self
 
     def run() handle gather end
@@ -17,8 +17,8 @@ module QuickRadioPlaylist
 #puts 'song='; pp           song
       SongNowPlaying.output song
       return if song_same?  song
-      require 'quick_radio_playlist/song_change_handle'
-      SongChangeHandle.run  song
+      require 'quick_radio_playlist/handler_song_change'
+      HandlerSongChange.run song
     end
 
     def song_same?(song) SongNowPlaying.same? song end

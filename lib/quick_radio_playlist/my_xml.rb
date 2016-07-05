@@ -1,7 +1,7 @@
 # coding: utf-8
 require 'xmlsimple'
 
-module QuickRadioPlaylist
+module ::QuickRadioPlaylist
   module MyXml
     extend self
 

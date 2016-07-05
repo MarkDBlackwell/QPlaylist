@@ -1,38 +1,35 @@
 # coding: utf-8
-require 'quick_radio_playlist/my_enumerable'
+require 'pp'
+require 'quick_radio_playlist/hour_current'
+require 'quick_radio_playlist/my_array'
 require 'quick_radio_playlist/my_hash'
-require 'quick_radio_playlist/my_time'
 require 'quick_radio_playlist/song_initialize'
 
-module QuickRadioPlaylist
+module ::QuickRadioPlaylist
   class Song
+    using MyArray
+    using MyHash
+
     attr_reader :to_h
 
-    def self.keys_for_blank_song()
-      %i[ artist clock current_time date day hour meridian minute month start_time time title year ]
-    end
-
-    def self.   new_blank
-      song = new ::Hash[keys_for_blank_song.product ['']]
-#puts 'song='; pp                      song
-      MyHash.verify_blank              song
-    end
-
-    def initialize(                 hash)
-      h = MyHash.convert_to_symbols hash
-#puts                                  'h='; pp h
-      time =                     MyTime.time_now
-      MyHash.safe_set h, :date, (MyTime.      year_month_day_string    time)
-#puts '(h.fetch :date)='; pp (h.fetch :date)
-      MyHash.safe_set h, :time, (MyTime.hour_minute_meridian_string    time)
-#puts '(h.fetch :time)='; pp (h.fetch :time)
-      MyHash.store_all_same             h, %i[ current_time start_time time ]
+    def initialize(hash)
+      h     =      hash.convert_to_symbols
+      h.store_all_same keys_same
+# On Windows (almost always), system time is local time:
+      time = ::Time.now.round
+# Avoid clobbering the implications of keys already set. Avoid
+#   that possibility, by proceeding from coarser to finer keys:
+      h.safe_set :date, (HourCurrent.year_month_day_string time)
+      h.safe_set :time, (      hour_minute_meridian_string time)
+      h.store_all_same keys_same
       \
-          SongInitialize.set_from_clock \
-          SongInitialize.set_from_time  \
-          SongInitialize.set_from_date  h
-#puts                                  'h='; pp h
-      @to_h = check_length              h
+          SongInitialize.set_from :clock, ( \
+          SongInitialize.set_from :time,  ( \
+          SongInitialize.set_from :date,  ( \
+                   h)))
+#puts             'h='; pp h
+      check_length h
+      @to_h =      h.freeze
     end
 
     def fetch(key) @to_h.fetch key end
@@ -45,14 +42,21 @@ module QuickRadioPlaylist
 
     private
 
-    def check_length(                                hash)
-      desired = self.class.keys_for_blank_song
-      unless MyEnumerable.all_same? [       desired, hash].map(&:length)
-        message = "When "       "creating song #{pp  hash
-              }, number of keys should be #{desired.             length}."
+    def check_length(hash)
+      unless        [hash, keys_desired].map(&:length).all_same?
+        message = "When creating song #{
+            ::PP.pp  hash, $stderr}, number of keys should be #{
+                           keys_desired.       length}."
         raise message
       end
-      hash
     end
+
+    def hour_minute_meridian_string(time) time.strftime '%-H:%M %p' end
+
+    def keys_desired
+      %i[ artist  clock  current_time  date  day  hour  meridian  minute  month  start_time  time  title  year ]
+    end
+
+    def keys_same() %i[ current_time  start_time  time ] end
   end
 end

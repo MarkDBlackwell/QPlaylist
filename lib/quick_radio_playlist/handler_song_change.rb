@@ -5,16 +5,16 @@ require 'quick_radio_playlist/song_now_playing'
 require 'quick_radio_playlist/song_recent'
 require 'quick_radio_playlist/song_recent_database'
 
-module QuickRadioPlaylist
-  module SongChangeHandle
+module ::QuickRadioPlaylist
+  module HandlerSongChange
     extend self
 
     def run(               song)
       song_add             song
       history_update
       return if hour_same? song
-      require 'quick_radio_playlist/hour_change_handle'
-      HourChangeHandle.run
+      require 'quick_radio_playlist/handler_hour_change'
+      HandlerHourChange.run
     end
 
     private

@@ -1,18 +1,22 @@
 # coding: utf-8
 
-module QuickRadioPlaylist
-## TODO: From Ruby 2.1.0, we can use Ruby refinements.
-##   Use this new feature here, when available.
-##
+module ::QuickRadioPlaylist
   module MyArray
-    extend self
 
-    def lengths(a) a.map(&:length) end
+    refine ::Array do
 
-    def only(a) raise 'Should be just one.' unless 1 == a.length; a.first end
+      def all_same?() 1 >= group_by{|e| e}.length end
 
-    def terminate(a) a.flatten.map{|e| "#{e}\n"} end
+      def lengths() map(&:length) end
 
-    def terminate_join(a) (terminate a).join '' end
+      def only() raise 'Should be just one.' unless 1 == length; first end
+
+      def terminate() flatten.map{|e| "#{e}\n"} end
+
+      def terminate_join() terminate.join '' end
+
+# Don't require 'my_hash'. (That produces a warning, regarding circularity.):
+      def trim_all(keys) map{|e| e.select{|k,v| keys.include? k}} end
+    end
   end
 end

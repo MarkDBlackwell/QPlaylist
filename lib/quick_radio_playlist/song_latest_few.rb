@@ -1,29 +1,22 @@
 # coding: utf-8
-require 'quick_radio_playlist/data_access'
-require 'quick_radio_playlist/song'
-require 'quick_radio_playlist/substitutions_latest_few'
+require 'quick_radio_playlist/song_common'
 
-module QuickRadioPlaylist
+module ::QuickRadioPlaylist
   module SongLatestFew
     extend self
+    include SongCommon
 
     def cardinality() 5 end
 
-    def output(                           songs)
-      (SubstitutionsLatestFew.new acquire songs).
-          substitute (filepath 'mustache'),
-                     (filepath     'html')
+    def output(   songs)
+      selected = (songs.reverse!.take cardinality)
+      SongCommon.render selected, keys_view, (method :filepath)
     end
 
     private
 
-    def acquire(     songs)
-#puts 'songs='; pp songs
-      padded_songs = songs.reverse +
-            ::Array.new(cardinality){Song.new_blank}
-      padded_songs.take cardinality
-    end
-
     def filepath(extension) DataAccess.filepath 'latest_five', extension end
+
+    def keys_view() %i[ artist  start_time  title ] end
   end
 end

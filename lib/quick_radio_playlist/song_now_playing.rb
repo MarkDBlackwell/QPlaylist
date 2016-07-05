@@ -1,16 +1,18 @@
 # coding: utf-8
-require 'quick_radio_playlist/data_access'
 require 'quick_radio_playlist/my_array'
-require 'quick_radio_playlist/my_enumerable'
-require 'quick_radio_playlist/substitutions'
+require 'quick_radio_playlist/song_common'
 
-module QuickRadioPlaylist
+module ::QuickRadioPlaylist
   module SongNowPlaying
     extend self
+    using MyArray
 
-    def output(song) (Substitutions.new song.to_h).substitute (filepath 'mustache'), (filepath 'html') end
+    def output(  song)
+      selected = song
+      SongCommon.render selected, keys_view, (method :filepath)
+    end
 
-    def same?(song) MyEnumerable.all_same? [(build_string song), txt_read] end
+    def same?(song) (build_string song) == txt_read end
 
     def txt_update(song) DataAccess.write (filepath 'txt'), (build_string song) end
 
@@ -18,11 +20,13 @@ module QuickRadioPlaylist
 
     private
 
-    def build_string(song) MyArray.terminate_join song.values_at(*ordered_keys) end
+    def build_string(song) song.values_at(*ordered_keys).terminate_join end
 
     def filepath(extension) DataAccess.filepath 'now_playing', extension end
 
-    def ordered_keys() %i[ artist title ] end
+    def keys_view() %i[ artist  current_time  title ] end
+
+    def ordered_keys() %i[ artist  title ] end
 
     def txt_read() DataAccess.read_array filepath 'txt' end
   end
