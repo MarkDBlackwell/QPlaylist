@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    quick-radio-playlist (1.0.0-x64-mingw32)
+    quick-radio-playlist (1.0.0)
       bundler (= 1.12.5)
       ffi (= 1.9.10)
       inifile (= 3.0.0)
@@ -19,7 +19,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    ffi (1.9.10-x64-mingw32)
+    ffi (1.9.10-x86-mingw32)
     inifile (3.0.0)
     little-plugger (1.1.4)
     logging (2.1.0)
@@ -38,8 +38,10 @@ GEM
 
 PLATFORMS
   x64-mingw32
+  x86-mingw32
 
 DEPENDENCIES
+  ffi (= 1.9.10)
   quick-radio-playlist!
   yard (= 0.8.7.6)
 

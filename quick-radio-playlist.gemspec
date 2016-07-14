@@ -42,7 +42,7 @@ name = 'quick-radio-playlist'
   s.license                       = 'GPL-3.0'
   s.metadata['allowed_push_host'] = 'https://rubygems.org'
   s.name                          = name
-  s.platform                      = 'x64-mingw32'
+  s.platform                      = ::Gem::Platform::RUBY
   s.post_install_message          = "#{name} installation complete. Next, do 'setup'."
   s.rdoc_options                 << "--title #{name}"
   s.rdoc_options                 += %w[--main README.md]
@@ -56,8 +56,7 @@ name = 'quick-radio-playlist'
 ##
 #print '*.gemspec: ruby_version_required='; p ruby_version_required
   s.required_ruby_version         =  ruby_version_required
-# s.required_rubygems_version     = '2.4.5.1'
-  s.required_rubygems_version     = '2.6.4'
+  s.required_rubygems_version     = '2.6.6'
   s.requirements                 << 'WideOrbit Automation'
   s.requirements                 << 'Windows NT family'
   s.requirements                 << 'Windows 7 (maybe)'

@@ -23,8 +23,10 @@ scope do
   ruby                ruby_version_required,
       engine_version: ruby_version_required,
       engine:        'ruby',
-      patchlevel: '230'
+      patchlevel: '319'
 end
 
 # Specify the gem dependencies in {anything}.gemspec.
 gemspec
+
+gem 'ffi', '1.9.10', platforms: :mswin
