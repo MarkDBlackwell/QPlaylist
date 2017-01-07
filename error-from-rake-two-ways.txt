@@ -1,0 +1,7 @@
+configure: creating ./config.status
+rake aborted!
+Command failed with status (4): [sh -c "../ruby_2_2/configure --enable-shared --disable-install-doc debugflags=-g CPPFLAGS='-DFD_SETSIZE=2048' --prefix=C:/Mark/develop/GitHub/oneclick/rubyinstaller/sandbox/ruby22_mingw"]
+
+configure: creating ./config.status
+rake aborted!
+Command failed with status (4): [sh -c "../ruby_2_2/configure --enable-shar...]

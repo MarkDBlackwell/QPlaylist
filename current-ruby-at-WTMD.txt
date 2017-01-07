@@ -1,0 +1,28 @@
+markblackwellme@gmail.com/1FF8FF93: Hello! How are you feeling? :)
+
+Megan: Ok :) What's up?
+
+markblackwellme@gmail.com/1FF8FF93: The file access letters that I was 
+suspicious of worked fine on Windows 7 in a simple test I created this 
+morning. And, my copy here of the code currently at WTMD looks good, to 
+my eyes ("eyeball check"). So to go further, I'll want to include more 
+thorough testing. I already have developed such testing, in my current 
+code (on Mycroft). To the end of updating WTMD to something like my 
+current code, could you, when you have a chance, access the QPlaylist 
+computer and write down the complete output of the following Ruby 
+version-checking command, for me to see what exactly is running there?: 
+ruby -v
+
+markblackwellme@gmail.com/1FF8FF93: and type it in, here?
+
+markblackwellme@gmail.com/1FF8FF93: If you would, please? I'm not in a 
+hurry; I'll come back to this chat, sometime later, to read what you've 
+typed. Thanks in advance. :)
+
+Megan: ok
+
+Megan: ruby 2.2.4p230 (2015-12-16 revision 53155) [x64-mingw32]
+
+markblackwellme@gmail.com/1FF8FF93: Thanks, dear! :)
+
+Megan: You're welcome :)
