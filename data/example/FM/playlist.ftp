@@ -1,0 +1,13 @@
+open usm17.siteground.biz
+nowplaying@wtmd.org
+tmd-o-copter64%Y
+cd /radio/
+put C:\QPlaylist-FM\var\now_playing.html   NowPlaying.html
+put C:\QPlaylist-FM\var\latest_five.html   LatestFive.html
+put C:\QPlaylist-FM\var\recent_songs.html  RecentSongs.html
+cd /player/
+put C:\QPlaylist-FM\var\latest_five.html   LatestFive.html
+cd /wtmdapp/
+put C:\QPlaylist-FM\var\latest_five.json   LatestFive.json
+disconnect
+quit

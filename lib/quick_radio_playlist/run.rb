@@ -26,11 +26,11 @@ module QuickRadioPlaylist
       same ? 'same' : nil
     end
 
-    def create_output(substitutions, input_template_file, output_file)
+    def create_output(substitutions, input_template_file, output_file, raw_is_safe = false)
       File.open input_template_file, 'rb' do |f_template|
         lines = f_template.readlines
         File.open output_file, 'wb' do |f_out|
-          lines.each{|e| f_out.print substitutions.run e}
+          lines.each{|e| f_out.print substitutions.run e, raw_is_safe}
         end
       end
     end
@@ -132,7 +132,8 @@ module QuickRadioPlaylist
 #print 'latest_five='; p latest_five
         substitutions_latest_five = SubstitutionsLatestFive.new latest_five
 #print 'substitutions_latest_five='; p substitutions_latest_five
-        create_output substitutions_latest_five, 'var/latest_five.mustache', 'var/latest_five.html'
+        create_output substitutions_latest_five, 'var/latest_five.mustache',      'var/latest_five.html'
+        create_output substitutions_latest_five, 'var/latest_five.json.mustache', 'var/latest_five.json', true
         create_output_recent_songs dates, times, artists, titles
         n = Time.now.localtime.round
         year_month_day_hour_string = Time.new(n.year, n.month, n.day, n.hour).strftime '%4Y %2m %2d %2H'
@@ -201,11 +202,15 @@ module QuickRadioPlaylist
       @substitutions = fields.zip current_values
     end
 
-    def run(s)
-      @substitutions.each do |input,output|
-#print '[input,output]='; p [input,output]
-        safe_output = CGI.escape_html output
-        s = s.gsub input, safe_output
+    def run(s, raw_is_safe = false)
+      @substitutions.each do |input,output_raw|
+#print '[input,output_raw]='; p [input,output_raw]
+        output = if raw_is_safe
+          output_raw
+        else
+          CGI.escape_html output_raw
+        end
+        s = s.gsub input, output
       end
       s
     end
