@@ -97,7 +97,7 @@ name = 'quick-radio-playlist'
   s.add_dependency 'win32-service', '0.8.7'
   s.add_dependency 'xml-simple', '1.1.5' # At WTMD: 1.1.2
 
-  s.add_development_dependency 'yard', '0.8.7.6'
+  s.add_development_dependency 'yard', '0.9.12'
 
 # Per:
 # https://github.com/bundler/bundler/issues/4131
